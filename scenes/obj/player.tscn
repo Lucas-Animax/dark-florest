@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwhc007p061ik"]
+
+[ext_resource type="Texture2D" uid="uid://cly2lhfmihw0d" path="res://assets/player/char_red.png" id="1_0fixq"]
+[ext_resource type="Script" path="res://sprt/player.gd" id="1_d2xqp"]
+[ext_resource type="Script" path="res://sprt/anim_player.gd" id="3_lp4db"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwp7m"]
+size = Vector2(20, 32)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("spr")]
+collision_mask = 14
+script = ExtResource("1_d2xqp")
+spr = NodePath("Sprite2D")
+speed = 64.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." node_paths=PackedStringArray("anim")]
+position = Vector2(4, -3)
+texture = ExtResource("1_0fixq")
+hframes = 8
+vframes = 11
+script = ExtResource("3_lp4db")
+anim = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_top = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_mwp7m")
