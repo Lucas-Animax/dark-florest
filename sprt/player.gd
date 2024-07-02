@@ -1,10 +1,14 @@
 extends CharacterBody2D
 class_name Player
+#region int
+var jump_cont:int = 2
+#endregion
 @export_category("Objects")
 @export var spr:Sprite2D
 @export_category("Variables")
 @export var speed:float
 @export var gravit_value:float
+@export var jump_value:float
 
 func _physics_process(delta:float):
 	move_and_slide()
@@ -25,8 +29,14 @@ func _gravit():
 	
 	pass
 func _move_vertical():
-	
-	
+	if is_on_floor():
+		jump_cont = 0
+		
+	if Input.is_action_just_pressed("jump") and jump_cont < 2:
+		velocity.y -= jump_value
+		jump_cont += 1
+		return
+	print(jump_cont)
 	
 	
 	pass
