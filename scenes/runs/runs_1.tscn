@@ -11,6 +11,7 @@
 [node name="Player" parent="." instance=ExtResource("2_yo2fy")]
 position = Vector2(138, 65)
 gravit_value = 60.0
+jump_value = 550.0
 
 [node name="TileMap" parent="." instance=ExtResource("3_t2kl5")]
 position = Vector2(-18, 2)
