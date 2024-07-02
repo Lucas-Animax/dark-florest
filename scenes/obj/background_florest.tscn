@@ -8,7 +8,7 @@
 [node name="ParallaxBackground" type="ParallaxBackground"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2(320, 0)
+motion_mirroring = Vector2(320, 180)
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
 offset_right = 40.0
@@ -16,6 +16,7 @@ offset_bottom = 40.0
 texture = ExtResource("1_eg0oa")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.2, 1)
 motion_mirroring = Vector2(320, 0)
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer2"]
@@ -24,6 +25,7 @@ offset_bottom = 40.0
 texture = ExtResource("2_o3ja6")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 1)
 motion_mirroring = Vector2(320, 0)
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer3"]
@@ -32,6 +34,7 @@ offset_bottom = 40.0
 texture = ExtResource("3_1lgbi")
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.8, 1)
 motion_mirroring = Vector2(320, 0)
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer4"]
