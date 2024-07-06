@@ -1,5 +1,6 @@
 extends CharacterBody2D
 class_name Player_Class
+
 #region int
 var jump_cont:int = 2
 #endregion
@@ -9,15 +10,18 @@ var in_attack:bool = false
 var in_defence:bool = false
 var in_crouch:bool = false
 var check_input:bool = true
-
 #endregion
+#region objects @export
 @export_category("Objects")
 @export var spr:Sprite2D
+#endregion
+#region variables @export
 @export_category("Variables")
 @export var speed:float
 @export var gravit_value:float
 @export var jump_value:float
-
+#endregion
+const FRIC:float = 0.1
 func _check_inputs():
 	if not on_floor:
 		if in_attack or in_defence or in_crouch:
@@ -27,6 +31,7 @@ func _check_inputs():
 	
 	
 	pass
+
 func _physics_process(delta:float):
 	if check_input == true:
 		move_and_slide()
@@ -37,10 +42,11 @@ func _physics_process(delta:float):
 	spr._animate(velocity)
 	pass
 
-
 func _move_horizontal():
 	var dic:float = Input.get_axis("move_left","move_right")
-	velocity.x = dic * speed
+	if dic != 0:
+		velocity.x = lerp(velocity.x, dic * speed,FRIC)
+	else: velocity.x = move_toward(velocity.x,0,speed)
 	pass
 
 func _move_vertical():
@@ -64,6 +70,7 @@ func _actions():
 	defence()
 	crouch()
 	pass
+
 func attack():
 	if Input.is_action_just_pressed("attack") and is_on_floor() and not in_attack:
 		in_attack = true
@@ -74,6 +81,7 @@ func attack():
 	
 	
 	pass
+
 func defence():
 	if Input.is_action_pressed("defence") and is_on_floor() and not in_crouch:
 		in_defence = true
@@ -85,6 +93,7 @@ func defence():
 	
 	
 	pass
+
 func crouch():
 	if Input.is_action_pressed("crouch") and is_on_floor() and not in_defence:
 		in_crouch = true
