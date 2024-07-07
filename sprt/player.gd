@@ -3,6 +3,7 @@ class_name Player_Class
 
 #region int
 var jump_cont:int = 2
+var wall_dic:int
 #endregion
 #region bool
 var on_floor:bool 
@@ -26,8 +27,8 @@ var not_wall:bool = true
 #region consts
 const FRIC = 0.1
 const WALL_GRAVIT = 30
-const WALL_JUMP = 500
-const WALL_IMPUSE = 50
+const WALL_JUMP = 700
+const WALL_IMPUSE = 250
 #endregion
 func _check_inputs():
 	if not on_floor:
@@ -58,24 +59,18 @@ func _move_horizontal():
 	pass
 
 func _move_vertical():
-	if is_on_floor():
+	if is_on_floor() or next_to_wall():
 		jump_cont = 0
-	if next_to_wall():
-		jump_cont = 1
-	if Input.is_action_just_pressed("jump") and jump_cont < 1 and is_on_floor():
-		jump_cont += 1
-		velocity.y -= jump_value
-
-	elif  Input.is_action_just_pressed("jump") and jump_cont == 1 and not is_on_floor():
+	if  Input.is_action_just_pressed("jump") and jump_cont < 2:
 		jump_cont += 1
 		if next_to_wall() and not is_on_floor():
 			velocity.y -= WALL_JUMP
-			
+			velocity.x = wall_dic * WALL_IMPUSE
 		else:
 			velocity.y -= jump_value
 		
 func _gravit():
-	if is_on_wall() and not is_on_floor():
+	if next_to_wall() and not is_on_floor():
 		velocity.y += WALL_GRAVIT
 		if velocity.y > WALL_GRAVIT:
 			velocity.y = WALL_GRAVIT
