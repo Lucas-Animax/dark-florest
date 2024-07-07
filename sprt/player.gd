@@ -10,10 +10,12 @@ var in_attack:bool = false
 var in_defence:bool = false
 var in_crouch:bool = false
 var check_input:bool = true
+var not_wall:bool = true
 #endregion
 #region objects @export
 @export_category("Objects")
 @export var spr:Sprite2D
+@export var wall_ray:RayCast2D
 #endregion
 #region variables @export
 @export_category("Variables")
@@ -21,7 +23,12 @@ var check_input:bool = true
 @export var gravit_value:float
 @export var jump_value:float
 #endregion
-const FRIC:float = 0.1
+#region consts
+const FRIC = 0.1
+const WALL_GRAVIT = 30
+const WALL_JUMP = 500
+const WALL_IMPUSE = 50
+#endregion
 func _check_inputs():
 	if not on_floor:
 		if in_attack or in_defence or in_crouch:
@@ -39,6 +46,7 @@ func _physics_process(delta:float):
 		_move_vertical()
 	_actions()
 	_check_inputs()
+	_gravit()
 	spr._animate(velocity)
 	pass
 
@@ -52,14 +60,27 @@ func _move_horizontal():
 func _move_vertical():
 	if is_on_floor():
 		jump_cont = 0
+	if next_to_wall():
+		jump_cont = 1
 	if Input.is_action_just_pressed("jump") and jump_cont < 1 and is_on_floor():
-		velocity.y -= jump_value
 		jump_cont += 1
-	elif Input.is_action_just_pressed("jump") and jump_cont == 1 and not is_on_floor():
 		velocity.y -= jump_value
+
+	elif  Input.is_action_just_pressed("jump") and jump_cont == 1 and not is_on_floor():
 		jump_cont += 1
-		return
-	if not is_on_floor():
+		if next_to_wall() and not is_on_floor():
+			velocity.y -= WALL_JUMP
+			
+		else:
+			velocity.y -= jump_value
+		
+func _gravit():
+	if is_on_wall() and not is_on_floor():
+		velocity.y += WALL_GRAVIT
+		if velocity.y > WALL_GRAVIT:
+			velocity.y = WALL_GRAVIT
+		
+	elif not is_on_floor():
 		on_floor = true
 		velocity.y += gravit_value 
 		if velocity.y > gravit_value:
@@ -100,7 +121,17 @@ func crouch():
 	else:
 		in_crouch = false
 		spr.crouch_off = true
-	
+	pass
+
+func next_to_wall() -> bool:
+	if wall_ray.is_colliding() and not is_on_floor():
+		if not_wall:
+			velocity.y = 0
+			not_wall = false
+		return true
+	else:
+		not_wall = true 
+		return false
 	
 	
 	pass
