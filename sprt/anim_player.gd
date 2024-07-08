@@ -22,16 +22,19 @@ func _check_dic(dic):
 	if dic.x > 0:
 		flip_h = false
 		dic_name = "_left"
+
+		player_ref.direction = -1
 		position = Vector2.ZERO
-		player_ref.wall_dic = -1
+    
+
 		player_ref.wall_ray.target_position = Vector2(10,0)
 	elif dic.x < 0:
 		flip_h = true
 		dic_name = "_right"
-		position = Vector2(-4.8,0)
-		player_ref.wall_dic = 1
-		player_ref.wall_ray.target_position = Vector2(-10,0)
-	
+		player_ref.direction = 1
+		position = Vector2(-5,0)
+		player_ref.wall_ray.target_position = Vector2(-15,0)
+
 	
 	
 	pass
@@ -53,6 +56,7 @@ func anim_actions():
 	if player_ref.next_to_wall():
 		anim.play("wall_slide")
 		
+
 	elif player_ref.in_attack and attack_normal:
 		anim.play("attack"+dic_name)
 		return
