@@ -7,7 +7,7 @@
 [sub_resource type="Environment" id="Environment_0b6wj"]
 background_mode = 3
 glow_enabled = true
-glow_intensity = 1.0
+glow_intensity = 0.5
 glow_hdr_threshold = 1.5
 
 [node name="runs_1" type="Node2D"]
