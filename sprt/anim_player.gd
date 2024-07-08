@@ -22,18 +22,15 @@ func _check_dic(dic):
 	if dic.x > 0:
 		flip_h = false
 		dic_name = "_left"
-
 		player_ref.direction = -1
 		position = Vector2.ZERO
-	
-
 		player_ref.wall_ray.target_position = Vector2(10,0)
 	elif dic.x < 0:
 		flip_h = true
 		dic_name = "_right"
 		player_ref.direction = 1
 		position = Vector2(-5,0)
-		player_ref.wall_ray.target_position = Vector2(-15,0)
+		player_ref.wall_ray.target_position = Vector2(-12,0)
 
 	
 	

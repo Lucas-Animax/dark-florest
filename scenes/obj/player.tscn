@@ -253,6 +253,33 @@ size = Vector2(15.5, 36.3333)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wm8ca"]
 size = Vector2(31.5, 25)
 
+[sub_resource type="Animation" id="Animation_d2wi1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
 [sub_resource type="Animation" id="Animation_umw11"]
 resource_name = "light_anim"
 length = 10.0
@@ -282,33 +309,6 @@ tracks/1/keys = {
 "values": [0.5, 0.7]
 }
 
-[sub_resource type="Animation" id="Animation_d2wi1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.8]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:energy")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d0jif"]
 _data = {
 "RESET": SubResource("Animation_d2wi1"),
@@ -322,7 +322,7 @@ spr = NodePath("Sprite2D")
 wall_ray = NodePath("Wall_Ray")
 speed = 64.0
 gravit_value = 80.0
-jump_value = 580.0
+jump_value = 600.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." node_paths=PackedStringArray("anim", "player_ref")]
 texture = ExtResource("1_0fixq")

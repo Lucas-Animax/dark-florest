@@ -15,7 +15,6 @@ glow_hdr_threshold = 1.5
 [node name="Player" parent="." instance=ExtResource("2_yo2fy")]
 position = Vector2(88, 149)
 speed = 80.0
-jump_value = 600.0
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_xb03t")]
 
