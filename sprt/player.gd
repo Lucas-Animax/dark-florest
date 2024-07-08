@@ -4,6 +4,7 @@ class_name Player_Class
 #region int
 var jump_cont:int = 2
 var direction:int
+
 #endregion
 #region bool
 var on_floor:bool 
@@ -12,6 +13,7 @@ var in_defence:bool = false
 var in_crouch:bool = false
 var check_input:bool = true
 var on_wall:bool = false
+
 #endregion
 #region objects @export
 @export_category("Objects")
@@ -24,10 +26,12 @@ var on_wall:bool = false
 @export var gravit_value:float
 @export var jump_value:float
 #endregion
+
 const FRIC:float = 0.1
 const WALL_JUMP = 651
 const WALL_GRAVIT = 30
 const WALL_IMPUSE = 250
+
 func _check_inputs():
 	if not on_floor:
 		if in_attack or in_defence or in_crouch:
@@ -59,6 +63,7 @@ func _move_horizontal():
 func _move_vertical():
 	if is_on_floor() or next_to_wall():
 		jump_cont = 0
+
 	if Input.is_action_just_pressed("jump") and jump_cont < 2:
 		if next_to_wall() and not is_on_floor():
 			velocity.y -= WALL_JUMP
@@ -74,6 +79,7 @@ func _gravit():
 		if velocity.y > WALL_GRAVIT:
 			velocity.y = WALL_GRAVIT
 	elif not is_on_floor() and not next_to_wall():
+
 		on_floor = true
 		velocity.y += gravit_value 
 		if velocity.y > gravit_value:
@@ -114,10 +120,9 @@ func crouch():
 	else:
 		in_crouch = false
 		spr.crouch_off = true
-	
-	
-	
 	pass
+
+
 func next_to_wall() -> bool:
 	if wall_ray.is_colliding() and not is_on_floor():
 		if not on_wall:
