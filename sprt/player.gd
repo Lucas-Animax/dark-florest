@@ -3,6 +3,7 @@ class_name Player_Class
 
 #region int
 var jump_cont:int = 2
+var direction:int
 #endregion
 #region bool
 var on_floor:bool 
@@ -10,10 +11,12 @@ var in_attack:bool = false
 var in_defence:bool = false
 var in_crouch:bool = false
 var check_input:bool = true
+var on_wall:bool = false
 #endregion
 #region objects @export
 @export_category("Objects")
 @export var spr:Sprite2D
+@export var wall_ray:RayCast2D
 #endregion
 #region variables @export
 @export_category("Variables")
@@ -22,6 +25,9 @@ var check_input:bool = true
 @export var jump_value:float
 #endregion
 const FRIC:float = 0.1
+const WALL_JUMP = 650
+const WALL_GRAVIT = 30
+const WALL_IMPUSE = 250
 func _check_inputs():
 	if not on_floor:
 		if in_attack or in_defence or in_crouch:
@@ -39,6 +45,7 @@ func _physics_process(delta:float):
 		_move_vertical()
 	_actions()
 	_check_inputs()
+	_gravit()
 	spr._animate(velocity)
 	pass
 
@@ -50,16 +57,23 @@ func _move_horizontal():
 	pass
 
 func _move_vertical():
-	if is_on_floor():
+	if is_on_floor() or next_to_wall():
 		jump_cont = 0
-	if Input.is_action_just_pressed("jump") and jump_cont < 1 and is_on_floor():
-		velocity.y -= jump_value
-		jump_cont += 1
-	elif Input.is_action_just_pressed("jump") and jump_cont == 1 and not is_on_floor():
-		velocity.y -= jump_value
-		jump_cont += 1
-		return
-	if not is_on_floor():
+	if Input.is_action_just_pressed("jump") and jump_cont < 2:
+		if next_to_wall() and not is_on_floor():
+			velocity.y -= WALL_JUMP
+			velocity.x = direction * WALL_IMPUSE
+		else:
+			velocity.y -= jump_value
+			jump_cont += 1
+		
+	
+func _gravit():
+	if next_to_wall() and not is_on_floor():
+		velocity.y += WALL_GRAVIT 
+		if velocity.y > WALL_GRAVIT:
+			velocity.y = WALL_GRAVIT
+	elif not is_on_floor() and not next_to_wall():
 		on_floor = true
 		velocity.y += gravit_value 
 		if velocity.y > gravit_value:
@@ -100,6 +114,20 @@ func crouch():
 	else:
 		in_crouch = false
 		spr.crouch_off = true
+	
+	
+	
+	pass
+func next_to_wall() -> bool:
+	if wall_ray.is_colliding() and not is_on_floor():
+		if not on_wall:
+			velocity.y = 0
+			on_wall = true
+		return true 
+	else:
+		on_wall = false 
+		return false
+	
 	
 	
 	
