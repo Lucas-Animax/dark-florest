@@ -10,7 +10,7 @@
 position = Vector2(138, 65)
 speed = 80.0
 gravit_value = 80.0
-jump_value = 570.0
+jump_value = 600.0
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_xb03t")]
 

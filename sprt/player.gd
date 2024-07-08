@@ -25,7 +25,7 @@ var on_wall:bool = false
 @export var jump_value:float
 #endregion
 const FRIC:float = 0.1
-const WALL_JUMP = 651
+const WALL_JUMP = 680
 const WALL_GRAVIT = 30
 const WALL_IMPUSE = 250
 func _check_inputs():
@@ -60,12 +60,12 @@ func _move_vertical():
 	if is_on_floor() or next_to_wall():
 		jump_cont = 0
 	if Input.is_action_just_pressed("jump") and jump_cont < 2:
+		jump_cont += 1
 		if next_to_wall() and not is_on_floor():
 			velocity.y -= WALL_JUMP
 			velocity.x = direction * WALL_IMPUSE
 		else:
 			velocity.y -= jump_value
-			jump_cont += 1
 		
 	
 func _gravit():
