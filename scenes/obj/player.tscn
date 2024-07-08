@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwhc007p061ik"]
+[gd_scene load_steps=22 format=3 uid="uid://cwhc007p061ik"]
 
 [ext_resource type="Texture2D" uid="uid://cly2lhfmihw0d" path="res://assets/player/char_red.png" id="1_0fixq"]
 [ext_resource type="Script" path="res://sprt/player.gd" id="1_d2xqp"]
 [ext_resource type="Script" path="res://sprt/anim_player.gd" id="3_lp4db"]
+[ext_resource type="Texture2D" uid="uid://bnygis04l6odj" path="res://assets/effect/light.png" id="4_71fua"]
 
 [sub_resource type="Animation" id="Animation_vh2fl"]
 length = 0.001
@@ -214,9 +215,7 @@ tracks/0/keys = {
 "values": [16, 17, 18, 19, 20, 21, 22, 23]
 }
 
-
 [sub_resource type="Animation" id="Animation_xphtw"]
-
 resource_name = "wall_slide"
 length = 0.2
 loop_mode = 1
@@ -245,17 +244,76 @@ _data = {
 "shild": SubResource("Animation_cciyt"),
 "up": SubResource("Animation_volaa"),
 "walk": SubResource("Animation_wq38f"),
-
 "wall_slide": SubResource("Animation_xphtw")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mwp7m"]
 size = Vector2(15.5, 36.3333)
 
-
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wm8ca"]
 size = Vector2(31.5, 25)
+
+[sub_resource type="Animation" id="Animation_umw11"]
+resource_name = "light_anim"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.3, 0.8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 0.8]
+}
+
+[sub_resource type="Animation" id="Animation_d2wi1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d0jif"]
+_data = {
+"RESET": SubResource("Animation_d2wi1"),
+"light_anim": SubResource("Animation_umw11")
+}
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("spr", "wall_ray")]
 collision_mask = 14
@@ -281,9 +339,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
 position = Vector2(-2.75, 10)
-
 shape = SubResource("RectangleShape2D_mwp7m")
 debug_color = Color(0, 0, 0, 0.42)
 
@@ -301,13 +357,21 @@ shape = SubResource("RectangleShape2D_wm8ca")
 disabled = true
 debug_color = Color(0.964706, 0.0705882, 0, 0.419608)
 
-
 [node name="Wall_Ray" type="RayCast2D" parent="."]
-
-
 position = Vector2(0, 1)
 target_position = Vector2(10, 0)
 collision_mask = 8
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 1, 2, 1)
+texture = ExtResource("4_71fua")
+texture_scale = 0.8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D"]
+libraries = {
+"": SubResource("AnimationLibrary_d0jif")
+}
+autoplay = "light_anim"
 
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="Sprite2D" method="_on_animation_player_animation_finished"]

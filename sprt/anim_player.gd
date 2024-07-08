@@ -25,7 +25,7 @@ func _check_dic(dic):
 
 		player_ref.direction = -1
 		position = Vector2.ZERO
-    
+	
 
 		player_ref.wall_ray.target_position = Vector2(10,0)
 	elif dic.x < 0:
