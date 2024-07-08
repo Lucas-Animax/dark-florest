@@ -25,7 +25,7 @@ var on_wall:bool = false
 @export var jump_value:float
 #endregion
 const FRIC:float = 0.1
-const WALL_JUMP = 651
+const WALL_JUMP = 650
 const WALL_GRAVIT = 30
 const WALL_IMPUSE = 250
 func _check_inputs():
