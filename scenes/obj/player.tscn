@@ -316,11 +316,12 @@ _data = {
 "light_anim": SubResource("Animation_umw11")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("spr", "wall_ray")]
-collision_mask = 14
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("spr", "wall_ray", "status") groups=["player"]]
+collision_mask = 15
 script = ExtResource("1_d2xqp")
 spr = NodePath("Sprite2D")
 wall_ray = NodePath("Wall_Ray")
+status = NodePath("PointLight2D/Stats")
 speed = 64.0
 gravit_value = 80.0
 jump_value = 600.0
@@ -374,7 +375,7 @@ libraries = {
 }
 autoplay = "light_anim"
 
-[node name="Stats" type="Node" parent="."]
+[node name="Stats" type="Node" parent="PointLight2D"]
 script = ExtResource("5_u7lj6")
 
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
