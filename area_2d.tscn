@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://64w037rod2ft"]
+
+[sub_resource type="GDScript" id="GDScript_k1ras"]
+script/source = "extends Area2D
+class_name Dano
+
+var player_status:PlayerStats
+var player_ref:Player_Class = null
+
+
+
+func _on_body_entered(body):
+	if body.is_in_group(\"player\"):
+		body.status.update_health(\"negative\",5)
+	pass # Replace with function body.
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g6rtv"]
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 8
+script = SubResource("GDScript_k1ras")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g6rtv")
+debug_color = Color(0.658739, 0, 0.164988, 0.42)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

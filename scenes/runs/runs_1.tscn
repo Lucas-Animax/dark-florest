@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8137f8ubsb1x"]
+[gd_scene load_steps=6 format=3 uid="uid://c8137f8ubsb1x"]
 
 [ext_resource type="PackedScene" uid="uid://h7fik21wsrmh" path="res://scenes/obj/background_florest.tscn" id="1_xb03t"]
 [ext_resource type="PackedScene" uid="uid://cwhc007p061ik" path="res://scenes/obj/player.tscn" id="2_yo2fy"]
 [ext_resource type="PackedScene" uid="uid://ds7g0wsf0ncyt" path="res://scenes/obj/grond_tile_map.tscn" id="3_t2kl5"]
+[ext_resource type="PackedScene" uid="uid://64w037rod2ft" path="res://area_2d.tscn" id="4_lswvs"]
 
 [sub_resource type="Environment" id="Environment_0b6wj"]
 background_mode = 3
@@ -27,3 +28,6 @@ color = Color(0.340339, 0.340339, 0.340339, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0b6wj")
+
+[node name="Area2D" parent="." instance=ExtResource("4_lswvs")]
+position = Vector2(170, 165)

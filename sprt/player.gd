@@ -19,6 +19,7 @@ var on_wall:bool = false
 @export_category("Objects")
 @export var spr:Sprite2D
 @export var wall_ray:RayCast2D
+@export var status:Node
 #endregion
 #region variables @export
 @export_category("Variables")
@@ -26,11 +27,12 @@ var on_wall:bool = false
 @export var gravit_value:float
 @export var jump_value:float
 #endregion
-
+#region const
 const FRIC:float = 0.1
 const WALL_JUMP = 680
 const WALL_GRAVIT = 30
 const WALL_IMPUSE = 250
+#endregion
 
 func _check_inputs():
 	if not on_floor:
@@ -43,7 +45,7 @@ func _check_inputs():
 	pass
 
 func _physics_process(delta:float):
-	if check_input == true:
+	if check_input:
 		move_and_slide()
 		_move_horizontal()
 		_move_vertical()
@@ -63,7 +65,6 @@ func _move_horizontal():
 func _move_vertical():
 	if is_on_floor() or next_to_wall():
 		jump_cont = 0
-
 	if Input.is_action_just_pressed("jump") and jump_cont < 2:
 		jump_cont += 1
 		if next_to_wall() and not is_on_floor():
@@ -71,15 +72,13 @@ func _move_vertical():
 			velocity.x = direction * WALL_IMPUSE
 		else:
 			velocity.y -= jump_value
-		
-	
+
 func _gravit():
 	if next_to_wall() and not is_on_floor():
 		velocity.y += WALL_GRAVIT 
 		if velocity.y > WALL_GRAVIT:
 			velocity.y = WALL_GRAVIT
 	elif not is_on_floor() and not next_to_wall():
-
 		on_floor = true
 		velocity.y += gravit_value 
 		if velocity.y > gravit_value:
@@ -105,9 +104,12 @@ func attack():
 func defence():
 	if Input.is_action_pressed("defence") and is_on_floor() and not in_crouch:
 		in_defence = true
+		status.shilding = true
+		print(status.current_health)
 	else:
 		in_defence = false
 		spr.defence_off = true
+		status.shilding = false
 	
 	
 	
