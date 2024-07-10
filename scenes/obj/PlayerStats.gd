@@ -51,8 +51,7 @@ func _ready():
 	
 	
 	pass
-#matei um inimigo ele deu 15 xp
-#_update_exp(15)
+
 func update_exp(value:int):
 	current_exp += value
 	if current_exp >= level_dic[str(level)] and level < max_level:
@@ -68,24 +67,26 @@ func update_exp(value:int):
 	
 	
 	pass
+
 func on_level_up():
 	current_health = base_health + bonus_health
 	current_mana = base_mana + bonus_mana
 	
 	
 	pass
+
 func update_health(type:String,value:int):
 	match type:
 		"positive":
-			current_health = value
+			current_health += value
 			if current_exp >= max_health:
 				current_health = max_health
 		"negative":
 			check_shilding(value)
 			if current_health <= 0:
-				current_health = 0
 				pass #chmar animação de morte
 			else: pass #chamr animação de dano
+
 func check_shilding(value:int):
 	if not shilding:
 		current_health -= value
@@ -100,3 +101,17 @@ func check_shilding(value:int):
 	pass
 	
 	
+func update_mana(type:String,value:int):
+	match type:
+		"positive":
+			current_mana += value
+			if current_mana >= max_mana:
+				current_mana = max_mana
+		"negative":
+			current_mana -= value
+	
+	
+	
+	
+	
+	pass
